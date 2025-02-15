@@ -5,7 +5,8 @@
   import { authApi } from '../../api/auth.api';
   import { Button } from '../common/Button';
   import { Input } from '../common/Input';
-import { useAuth } from '../../hooks/useAuth';
+  import { useAuth } from '../../hooks/useAuth';
+  import { validateEmail, validatePassword } from '../../utils/validation';
   
   export const AuthForm = () => {
     const [isLogin, setIsLogin] = useState(true);
@@ -42,53 +43,58 @@ import { useAuth } from '../../hooks/useAuth';
       <div className="min-h-screen bg-gray-900 flex justify-center items-center">
         <div className="w-full max-w-md p-6 rounded-lg bg-gray-800">
           <h1 className="text-2xl font-bold text-cyan-400 mb-6 text-center">
-            {isLogin ? 'Login' : 'Register'}
+            {isLogin ? "Login" : "Register"}
           </h1>
-          
+
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <Input
               label="Email"
               type="email"
-              {...register('email', { required: 'Email is required' })}
+              {...register("email", {
+                required: "Email is required",
+                validate: (value) =>
+                  validateEmail(value) || "Please enter a valid email address",
+              })}
               error={errors.email?.message}
             />
-  
+
             <Input
               label="Password"
               type="password"
-              {...register('password', { required: 'Password is required' })}
+              {...register("password", {
+                required: "Password is required",
+                validate: (value) =>
+                  validatePassword(value) ||
+                  "Password must be at least 8 characters long",
+              })}
               error={errors.password?.message}
             />
-  
+
             {!isLogin && (
               <Input
                 label="Confirm Password"
                 type="password"
-                {...register('confirmPassword', {
-                  required: 'Confirm Password is required',
+                {...register("confirmPassword", {
+                  required: "Confirm Password is required",
                   validate: (value) =>
-                    value === watch('password') || 'Passwords do not match',
+                    value === watch("password") || "Passwords do not match",
                 })}
                 error={errors.confirmPassword?.message}
               />
             )}
-  
-            <Button
-              type="submit"
-              isLoading={isSubmitting}
-              className="w-full"
-            >
-              {isLogin ? 'Login' : 'Register'}
+
+            <Button type="submit" isLoading={isSubmitting} className="w-full">
+              {isLogin ? "Login" : "Register"}
             </Button>
-  
+
             <div className="text-center mt-4">
               <button
                 type="button"
                 onClick={toggleForm}
                 className="text-cyan-400 hover:text-cyan-300 text-sm"
               >
-                {isLogin 
-                  ? "Don't have an account? Register" 
+                {isLogin
+                  ? "Don't have an account? Register"
                   : "Already have an account? Login"}
               </button>
             </div>
