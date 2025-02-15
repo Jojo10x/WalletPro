@@ -18,9 +18,11 @@ export const Dashboard: React.FC = () => {
               <DepositForm />
               <TransferForm />
             </div>
-            <div>
+            <div className="flex flex-col h-full">
               <h2 className="text-xl font-semibold mb-4">Recent Transactions</h2>
-              <TransactionList />
+              <div className="flex-grow">
+                <TransactionList />
+              </div>
             </div>
           </div>
         </div>
