@@ -1,0 +1,61 @@
+# .NET Core
+bin/
+obj/
+out/
+
+# Visual Studio / VS Code
+.vs/
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.userprefs
+
+# environment settings
+appsettings.Development.json
+appsettings.Production.json
+appsettings.Staging.json
+*.Development.json
+*.Production.json
+*.Staging.json
+
+# secrets
+*.pfx
+*.key
+*.pem
+*.cert
+*.crt
+
+# IDE
+.idea/
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# Logs
+[Ll]og/
+[Ll]ogs/
+*.log
+
+# Visual Studio IntelliCode
+.vs/
+
+# .NET Scaffolding
+ScaffoldingReadMe.txt
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
