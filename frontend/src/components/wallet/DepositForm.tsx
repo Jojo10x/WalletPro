@@ -4,36 +4,44 @@ import { Input } from '../common/Input';
 import { Button } from '../common/Button';
 import { ErrorMessage } from '../common/ErrorMessage';
 import { ConfirmationModal } from '../common/ConfirmationModal';
+import { useWallet } from '../../contexts/wallet';
 
 export const DepositForm: React.FC = () => {
   const [amount, setAmount] = useState('');
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const { deposit, error } = useWalletOperations();
   const [isSuccess, setIsSuccess] = useState(false);
-  const [depositedAmount, setDepositedAmount] = useState<number | null>(null); 
-
+  const [depositedAmount, setDepositedAmount] = useState<number | null>(null);
+  const { refreshTransactions, updateBalance, balance } = useWallet();
+  
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsConfirmModalOpen(true);
   };
-
+  
   const handleConfirmDeposit = async () => {
     const success = await deposit({
       amount: parseFloat(amount),
     });
-
+    
     if (success) {
-      setDepositedAmount(parseFloat(amount)); 
+      setDepositedAmount(parseFloat(amount));
+      
+      const newBalance = balance + parseFloat(amount);
+      updateBalance(newBalance);
+      
+      await refreshTransactions();
+      
       setAmount('');
       setIsSuccess(true);
       setTimeout(() => {
         setIsSuccess(false);
-        setDepositedAmount(null); 
-      }, 3000); 
+        setDepositedAmount(null);
+      }, 3000);
     }
     setIsConfirmModalOpen(false);
   };
-
+  
   return (
     <>
       <form onSubmit={handleSubmit} className="space-y-4 bg-white p-6 rounded-lg shadow">
@@ -52,7 +60,7 @@ export const DepositForm: React.FC = () => {
           />
         </div>
         {error && <ErrorMessage message={error} />}
-        {isSuccess && depositedAmount !== null && ( 
+        {isSuccess && depositedAmount !== null && (
           <div className="text-green-600 font-medium">
             Successfully added ${depositedAmount.toFixed(2)} to your account!
           </div>
@@ -61,7 +69,7 @@ export const DepositForm: React.FC = () => {
           Add Money
         </Button>
       </form>
-
+      
       <ConfirmationModal
         isOpen={isConfirmModalOpen}
         onClose={() => setIsConfirmModalOpen(false)}
