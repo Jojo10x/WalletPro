@@ -23,7 +23,7 @@ export const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 height-100% flex items-center justify-center">
+    <div className="fixed inset-0 z-50 h-screen flex items-center justify-center">
       <div 
         className="absolute inset-0 bg-[#0B0C10]/70 backdrop-blur-md transition-opacity duration-300"
         onClick={onClose}
