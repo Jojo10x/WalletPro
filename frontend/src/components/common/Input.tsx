@@ -11,7 +11,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   }) => {
     return (
       <div className="space-y-1">
-        <label className="block text-sm font-medium text-[#C5C6C7]">
+        <label className="block text-sm font-medium text-[#1F2833]">
           {label}
         </label>
         <input
