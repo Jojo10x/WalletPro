@@ -119,4 +119,20 @@ The frontend will be available at `http://localhost:5173`
    - View transaction history
 P.S you can only transact with other registered users.
 
+##  Login
+<img width="1347" alt="Screenshot 2025-02-17 at 1 00 13 AM" src="https://github.com/user-attachments/assets/8f5a72c4-5ef3-4c0b-9049-65d8d9bab620" />
+
+##  Registration
+<img width="1352" alt="Screenshot 2025-02-17 at 1 00 27 AM" src="https://github.com/user-attachments/assets/3d715ca9-83e5-4aa7-b347-34cc3481d84f" />
+
+##  Dashboard
+<img width="1352" alt="Screenshot 2025-02-17 at 1 03 28 AM" src="https://github.com/user-attachments/assets/892af45e-9cc3-4410-8d2b-fdf29d85e2df" />
+
+##  Profile page
+<img width="1352" alt="Screenshot 2025-02-17 at 1 03 51 AM" src="https://github.com/user-attachments/assets/c69fb4a2-15bb-4f9f-8221-58203b232ccb" />
+
+
+
+
+
 
