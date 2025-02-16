@@ -36,6 +36,7 @@ export const TransferForm: React.FC = () => {
     <>
       <form onSubmit={handleSubmit} className="space-y-4 bg-white p-6 rounded-lg shadow">
         <h2 className="text-xl font-semibold">Transfer Money</h2>
+        <div>
         <Input
           type="email"
           value={toEmail}
@@ -44,6 +45,10 @@ export const TransferForm: React.FC = () => {
           required
           label={""}
         />
+          <p className="text-sm text-gray-500 mt-1 text-center">
+            Transfers can only be made to registered users
+          </p>
+          </div>
         <Input
           type="number"
           value={amount}

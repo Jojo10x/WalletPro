@@ -13,10 +13,48 @@ export const DepositForm: React.FC = () => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [depositedAmount, setDepositedAmount] = useState<number | null>(null);
   const { refreshTransactions, updateBalance, balance } = useWallet();
+  const [validationError, setValidationError] = useState<string>('');
+  
+  const MIN_DEPOSIT = 1.00;
+  const MAX_DEPOSIT = 100000;
+  
+  const validateAmount = (value: string): boolean => {
+    const numValue = parseFloat(value);
+    
+    if (isNaN(numValue)) {
+      setValidationError('Please enter a valid amount');
+      return false;
+    }
+    
+    if (numValue < MIN_DEPOSIT) {
+      setValidationError(`Minimum deposit amount is $${MIN_DEPOSIT}`);
+      return false;
+    }
+    
+    if (numValue > MAX_DEPOSIT) {
+      setValidationError(`Maximum deposit amount is $${MAX_DEPOSIT.toLocaleString()}`);
+      return false;
+    }
+    
+    setValidationError('');
+    return true;
+  };
+  
+  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setAmount(value);
+    if (value) {
+      validateAmount(value);
+    } else {
+      setValidationError('');
+    }
+  };
   
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsConfirmModalOpen(true);
+    if (validateAmount(amount)) {
+      setIsConfirmModalOpen(true);
+    }
   };
   
   const handleConfirmDeposit = async () => {
@@ -50,22 +88,31 @@ export const DepositForm: React.FC = () => {
           <Input
             type="number"
             value={amount}
-            onChange={(e) => setAmount(e.target.value)}
+            onChange={handleAmountChange}
             placeholder="Amount to deposit"
-            min="0.01"
+            min={MIN_DEPOSIT}
+            max={MAX_DEPOSIT}
             step="0.01"
             required
             className="w-full"
             label={''}
           />
+          <p className="text-sm text-gray-500 mt-1 text-center">
+            Min: ${MIN_DEPOSIT} - Max: ${MAX_DEPOSIT.toLocaleString()}
+          </p>
         </div>
+        {validationError && <ErrorMessage message={validationError} />}
         {error && <ErrorMessage message={error} />}
         {isSuccess && depositedAmount !== null && (
           <div className="text-green-600 font-medium">
             Successfully added ${depositedAmount.toFixed(2)} to your account!
           </div>
         )}
-        <Button type="submit" className="w-full">
+        <Button 
+          type="submit" 
+          className="w-full"
+          disabled={!!validationError || !amount}
+        >
           Add Money
         </Button>
       </form>
@@ -75,7 +122,7 @@ export const DepositForm: React.FC = () => {
         onClose={() => setIsConfirmModalOpen(false)}
         onConfirm={handleConfirmDeposit}
         title="Confirm Deposit"
-        description={`Are you sure you want to deposit $${amount} to your account?`}
+        description={`Are you sure you want to deposit $${parseFloat(amount).toLocaleString()} to your account?`}
         confirmText="Confirm Deposit"
       />
     </>
